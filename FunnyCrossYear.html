@@ -45,6 +45,7 @@
     let minute = 59;
     let second = 50;
     
+    let isCrossed = false;
     
     let monthMap = {
         1: 31,
@@ -75,16 +76,17 @@
             hour = 0;
             day++;
         }
-        if (day > monthMap[month]) {
+        if (!isCrossed && day > monthMap[month]) {
             day = 1;
             month++;
         }
         if (month > 12) {
-			let range = Math.floor(Math.random() * 2);
-            //range = 0; // For testing failure case
+			//let range = Math.floor(Math.random() * 2);
+            range = 0; // For testing failure case
             if (range === 0) {
                 day = monthMap[12] + 1; // 32
                 month = 12;
+                isCrossed = true;
                 contentElement.innerText = "跨年失敗，現在是";
             } else {
                 year++;
@@ -93,8 +95,7 @@
                 contentElement.innerText = "跨年成功，現在是";
             }
             updateDate();
-            clearInterval(intervalId); // Stop the interval after crossing the year
-            return;
+            
         }
         updateDate();
         
