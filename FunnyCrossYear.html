@@ -29,12 +29,21 @@
     // Simple animation to change the year
     const dateElement = document.querySelector('.date');
     const contentElement = document.querySelector('.content');
+    let dateTime = new Date();
+    let year = dateTime.getFullYear();
+    let month = dateTime.getMonth() + 1;
+    let day = dateTime.getDate();
+    let hour = dateTime.getHours();
+    let minute = dateTime.getMinutes();
+    let second = dateTime.getSeconds(); 
+/*
     let year = 2025;
     let month = 12;
     let day = 31;
     let hour = 23;
     let minute = 59;
     let second = 50;
+    
     let monthMap = {
         1: 31,
         2: 28,
