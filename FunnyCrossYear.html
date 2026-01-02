@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funny Cross Year</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .date {
+            font-size: 48px;
+            color: #4CAF50;
+        }
+        .content {
+            font-size: 24px;
+            margin-top: 20px;
+        }  
+    </style>
+</head>
+<body>
+    <div class="content"></div>
+    <div class="date"></div>
+    </div>  
+</body>
+<script>
+    // Simple animation to change the year
+    const dateElement = document.querySelector('.date');
+    const contentElement = document.querySelector('.content');
+    let year = 2025;
+    let month = 12;
+    let day = 31;
+    let hour = 23;
+    let minute = 59;
+    let second = 50;
+    let monthMap = {
+        1: 31,
+        2: 28,
+        3: 31,
+        4: 30,
+        5: 31,
+        6: 30,
+        7: 31,
+        8: 31,
+        9: 30,
+        10: 31,
+        11: 30,
+        12: 31
+    };
+
+    let intervalId = setInterval((e) => {
+        second++;
+        if (second >= 60) {
+            second = 0;
+            minute++;
+        }
+        if (minute >= 60) {
+            minute = 0;
+            hour++;
+        }
+        if (hour >= 24) {
+            hour = 0;
+            day++;
+        }
+        if (day > monthMap[month]) {
+            day = 1;
+            month++;
+        }
+        if (month > 12) {
+            //TODO do random 0 or 1. if 0 then 2025/12/32 00:00:00 else 2026/01/01 00:00:00
+			let range = Math.floor(Math.random() * 2);
+            if (range === 0) {
+                day = monthMap[12] + 1; // 32
+                month = 12;
+                contentElement.innerText = "跨年失敗，現在是";
+            } else {
+                year++;
+                month = 1;
+                day = 1;
+                contentElement.innerText = "跨年成功，現在是";
+            }
+            updateDate();
+            clearInterval(intervalId); // Stop the interval after crossing the year
+            return;
+        }
+        updateDate();
+        
+    }, 1000); // Change year every 3 seconds
+
+    function updateDate() {
+        const dateElement = document.querySelector('.date');
+        dateElement.innerHTML = `
+            <span>
+                ${year}
+            </span>
+            /
+            <span>
+                ${String(month).padStart(2, '0')}
+            </span>
+            /
+            <span>
+                ${String(day).padStart(2, '0')}
+            </span>
+            <br/>
+            <span>
+                ${String(hour).padStart(2, '0')}
+            </span>
+            :
+            <span>
+                ${String(minute).padStart(2, '0')}
+            </span>
+            :
+            <span>
+                ${String(second).padStart(2, '0')}
+            </span>`;
+    }
+</script>
+</html>
